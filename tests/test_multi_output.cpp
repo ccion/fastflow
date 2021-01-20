@@ -96,7 +96,7 @@ public:
 int main() {
     A a;  B b;  C c;
 
-#if 0    
+#if 1    
     ff_Pipe<long,long> pipe1(a, b);
     if (pipe1.wrap_around()<0) {
         error("creating feedback channel between b and a\n");

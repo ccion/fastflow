@@ -142,7 +142,7 @@ int main(int argc,  char * argv[]) {
     farm.wrap_around();
 
     N multi_input(streamlen);
-    ff_Pipe pipe(farm, multi_input);
+    ff_Pipe<char,char> pipe(farm, multi_input);
 
     if (pipe.run_and_wait_end()<0) return -1;
     printf("DONE\n");

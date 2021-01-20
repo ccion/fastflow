@@ -321,6 +321,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
+/build
+/.vscode
 
 # End of https://www.gitignore.io/api/c,c++,eclipse,emacs,vim,cmake,autotools,macos,linux,windows

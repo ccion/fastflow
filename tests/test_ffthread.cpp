@@ -1,7 +1,7 @@
 #include <string>
 #include <ff/node.hpp>
 #include <iostream>
-
+using namespace ff;
 class manager:public ff::ff_thread {
 public:
 
@@ -41,12 +41,12 @@ public:
 	if (!running)
 	    {
 		stop();
-		return EOS_NOFREEZE;
+		return FF_EOS_NOFREEZE;
 	    }
 	
 	usleep(1000);
 	
-	return GO_ON;
+	return FF_GO_ON;
     }
 
 private:

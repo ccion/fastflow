@@ -103,7 +103,7 @@ int main() {
     Stage1 s1;
     Stage2 s2;
     Stage3 s3;
-#if 0
+#if 1
     ff_pipeline pipe;
     pipe.add_stage(&s0);
     pipe.add_stage(&s1);

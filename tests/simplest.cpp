@@ -56,10 +56,30 @@ private:
     long counter;
 };
 
+class Stage1 : public ff_node 
+{
+public:
+    Stage1() : m_counter(0) {}
+
+    int  svc_init(){
+        printf("Hello, I'm Stage1\n");
+        return 0;
+    }
+
+    void* svc(void *){
+
+    }
+private:
+    long  m_counter;
+};
+
 
 int main() {
     ff_pipeline pipe;
+    Stage1      stage1_tmp;
+    pipe.add_stage(stage1_tmp);
     pipe.add_stage(new Stage);
+    std::cout << "111" << std::endl;
     if (pipe.run_and_wait_end()<0) {
         error("running pipeline\n");
         return -1;

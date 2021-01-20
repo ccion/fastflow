@@ -62,7 +62,7 @@ struct Stage3: ff_node {
 };
 int main() {
     Stage1 s1; Stage2 s2; Stage3 s3;
-#if 0    
+#if 1    
     ff_pipeline pipe2;
     pipe2.add_stage(&s2);
     pipe2.add_stage(&s3);
