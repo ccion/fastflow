@@ -88,7 +88,7 @@ struct Worker: ff_node_t<long> {
     }
 };
 struct Last: ff_node_t<long> {
-    long* svc(long*) {
+    long* svc(long* in) {
         ++counter;
         printf("last,in:%ld\n",in);
         return GO_ON;
