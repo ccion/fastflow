@@ -66,13 +66,13 @@ struct First: ff_node_t<long> {
 };
 struct Emitter: ff_monode_t<long> {
     long* svc(long*in) {
-        printf("Emitter in:%ld\n",in);
+        printf("Emitter in:%ld\n",(long)in);
         return in;
     }
 };
 struct Collector: ff_minode_t<long> {
     long* svc(long*in) {
-        printf("collector in:%ld\n",in);
+        printf("collector in:%ld\n",(long)in);
         return in;
     }
 };
@@ -83,14 +83,14 @@ struct Worker: ff_node_t<long> {
         req.tv_sec = 0;
         req.tv_nsec = 3000*get_my_id();
         //nanosleep(&req, (struct timespec *)NULL);
-        printf("work in:%ld\n",in);
+        printf("work in:%ld\n",(long)in);
         return in;
     }
 };
 struct Last: ff_node_t<long> {
     long* svc(long* in) {
         ++counter;
-        printf("last,in:%ld\n",in);
+        printf("last,in:%ld\n",(long)in);
         return GO_ON;
     }
     size_t counter=0;
@@ -145,7 +145,7 @@ int main(int argc, char* argv[]) {
         error("running pipeline\n");
         return -1;
     }
-    printf("last number:%d\n",last.counter);
+    printf("last number:%ld\n",last.counter);
     printf("test DONE\n");
     return 0;
 }

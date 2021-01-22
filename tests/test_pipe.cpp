@@ -85,7 +85,7 @@ int main(int argc, char * argv[]) {
         fftask_t *task = nullptr;
         pipe.load_result(task);
         assert(task != pipe.EOS);
-        printf("result %ld, time:%ld us\n", task->r, pipe.ffTime());
+        printf("result %ld, time:%f us\n", task->r, pipe.ffTime());
         delete task;
     }
     pipe.wait();
