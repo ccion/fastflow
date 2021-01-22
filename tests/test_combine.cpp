@@ -50,7 +50,10 @@ struct firstStage: ff_node_t<long> {
 #else
 struct firstStage: ff_node_t<long> {
     long *svc(long*) {
-        if (myntasks<=0) return EOS;
+        if (myntasks<=0){
+            std::cout << __func__ << __LINE__  << std::endl;
+            return EOS;
+        } 
         long t = myntasks--;
         return (long*)t;
     }
@@ -97,10 +100,11 @@ int main() {
         r = _5.svc(r);
     }
     unsigned long fine=getusec();
-    std::cout << "TEST  FOR  Time = " << (fine-inizio) / 1000.0 << " ms\n";
+    std::cout << "TEST  FOR  Time = " << (fine-inizio) / 1000.0 << "ms\n";
     ff_Pipe<> pipe(_1,_2,_3,_4,_5);
     pipe.run_and_wait_end();
     std::cout << "TEST  PIPE Time = " << pipe.ffwTime() << " ms\n";
+#if 0
     {    
 
         // we declared them const because we want to re-use the same nodes in multiple tests
@@ -238,6 +242,6 @@ int main() {
             std::cout << "TEST11 DONE Time = " << pipe.ffwTime() << " ms\n";
         }
     }
-  
+#endif
     return 0;
 }

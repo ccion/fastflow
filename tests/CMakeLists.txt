@@ -1,4 +1,4 @@
-set ( TESTS
+set ( TESTS1
 bench_masterworker
 latptr11
 perf_parfor
@@ -139,6 +139,12 @@ test_taskf
 test_torus
 test_torus2
 test_uBuffer
+)
+
+set ( TESTS
+simplest
+test_pipe
+test_pipe2
 )
 	
 foreach( t ${TESTS} )

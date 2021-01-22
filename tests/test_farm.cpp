@@ -27,6 +27,7 @@
 // simple task-farm pattern test used as software accelerator 
 
 #include <ff/ff.hpp>
+#include <iostream>
   
 using namespace ff;
 

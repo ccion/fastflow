@@ -34,6 +34,7 @@ using namespace ff;
 
 static inline long F(long i) { return i+1; }
 static inline long G(long i) { return i*2; }
+static inline long L(long i) { sleep(1);return i*3; }
 
 #if !defined(SEQUENTIAL)
 struct fftask_t {
@@ -50,10 +51,16 @@ static inline fftask_t* wrapG(fftask_t *in, ff_node*const) {
     in->r=r;
     return in;
 }
+
+static inline  fftask_t* wrapL(fftask_t *in, ff_node *const){
+    long  r = L(in->r);
+    in->r = r;
+    return  in;
+}
 #endif
 
 int main(int argc, char * argv[]) {
-    long streamlen=1000;
+    long streamlen=10;
     if (argc>1) {
         if (argc!=2) {
             printf("use: %s streamlen\n",argv[0]);
@@ -66,8 +73,8 @@ int main(int argc, char * argv[]) {
     for(long i=0;i<streamlen;++i)
         printf("%ld ", G(F(i)));
 #else
-    ff_node_F<fftask_t> wrapf(wrapF), wrapg(wrapG);
-    ff_Pipe<fftask_t, fftask_t> pipe(true, wrapf,wrapg); // accelerator mode turned on
+    ff_node_F<fftask_t> wrapf(wrapF), wrapg(wrapG), wrapl(wrapL);
+    ff_Pipe<fftask_t, fftask_t> pipe(true, wrapf,wrapg,wrapl); // accelerator mode turned on
     pipe.run_then_freeze();
     for(long i=0;i<streamlen;++i) {
         fftask_t *task = new fftask_t(i);
@@ -78,7 +85,7 @@ int main(int argc, char * argv[]) {
         fftask_t *task = nullptr;
         pipe.load_result(task);
         assert(task != pipe.EOS);
-        printf("result %ld\n", task->r);
+        printf("result %ld, time:%ld us\n", task->r, pipe.ffTime());
         delete task;
     }
     pipe.wait();

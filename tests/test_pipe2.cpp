@@ -45,26 +45,34 @@ using namespace ff;
 
 struct First: ff_node_t<long> {
     First(const int ntasks):ntasks(ntasks) {}
-    long* svc(long*) {
+    long* svc(long*in) {
+#if 0
         for(long i=1;i<=ntasks;++i) {
             struct timespec req;
             req.tv_sec = 0;
             req.tv_nsec = 5000;
-            nanosleep(&req, (struct timespec *)NULL);
+            //nanosleep(&req, (struct timespec *)NULL);
 
             ff_send_out((long*)i);
         }
+#endif 
+        long  num = 10;
+        ff_send_out((long*)num);
         return EOS;
     }
+
+
     const int ntasks;
 };
 struct Emitter: ff_monode_t<long> {
     long* svc(long*in) {
+        printf("Emitter in:%ld\n",in);
         return in;
     }
 };
 struct Collector: ff_minode_t<long> {
     long* svc(long*in) {
+        printf("collector in:%ld\n",in);
         return in;
     }
 };
@@ -74,13 +82,15 @@ struct Worker: ff_node_t<long> {
         struct timespec req;
         req.tv_sec = 0;
         req.tv_nsec = 3000*get_my_id();
-        nanosleep(&req, (struct timespec *)NULL);        
+        //nanosleep(&req, (struct timespec *)NULL);
+        printf("work in:%ld\n",in);
         return in;
     }
 };
 struct Last: ff_node_t<long> {
     long* svc(long*) {
         ++counter;
+        printf("last,in:%ld\n",in);
         return GO_ON;
     }
     size_t counter=0;
@@ -91,7 +101,7 @@ int main(int argc, char* argv[]) {
 
     // default arguments
     size_t ntasks    = 10000;
-    size_t nworkers1 = 3;
+    size_t nworkers1 = 1;
     size_t nworkers2 = 2;
 
 
@@ -135,6 +145,7 @@ int main(int argc, char* argv[]) {
         error("running pipeline\n");
         return -1;
     }
+    printf("last number:%d\n",last.counter);
     printf("test DONE\n");
     return 0;
 }
